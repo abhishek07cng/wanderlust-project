@@ -19,7 +19,10 @@ const User = require('./models/user.js');
 
 const listings = require('./routes/listing.js');
 const reviews = require('./routes/review.js');
-const user = require('./routes/user..js');
+const user = require('./routes/user.js');
+const adminRoutes = require("./routes/admin");
+
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -133,6 +136,7 @@ app.use((req,res,next) => {
 app.use("/listings",listings);
 app.use("/listings/:id/reviews", reviews);
 app.use("/", user);
+app.use("/admin", adminRoutes);
 
 // //Index Route - List all listings
 // app.get("/listings", wrapAsync(async (req, res) => {

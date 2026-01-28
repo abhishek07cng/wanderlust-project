@@ -24,15 +24,55 @@ module.exports.saveRedirectUrl = (req, res, next) => {
     next();
 };
 
-module.exports.isOwner = async (req, res, next) => {
-    const {id} = req.params;
+/* ---------------- AUTHORIZATION ---------------- */
+module.exports.isOwnerOrAdmin = async (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.flash("error", "You must be logged in");
+        return res.redirect("/login");
+    }
+
+    const { id } = req.params;
     const listing = await Listing.findById(id);
-    if(!listing.owner.equals(req.user._id)){
-        req.flash("error", "You do not have permission to do that !");
-        return  res.redirect(`/listings/${id}`);
-    }   
-    next();
+
+    if (!listing) {
+        throw new ExpressError(404, "Listing not found");
+    }
+
+    if (
+        listing.owner.equals(req.user._id) ||
+        req.user.role === "admin"
+    ) {
+        return next();
+    }
+
+    req.flash("error", "You do not have permission to do that");
+    res.redirect(`/listings/${id}`);
 };
+module.exports.isAdmin = (req, res, next) => {
+  if (!req.isAuthenticated() || req.user.role !== "admin") {
+    req.flash("error", "Admin access only");
+    return res.redirect("/");
+  }
+  next();
+};
+
+// module.exports.isOwnerOrAdmin = async (req, res, next) => {
+//     const { id } = req.params;
+//     const listing = await Listing.findById(id);
+//     if (!listing) {
+//         throw new ExpressError(404, "Listing not found");
+//     }
+//     if (
+//         listing.owner.equals(req.user._id) ||
+//         req.user.role === "admin"
+//     ) {
+//         return next();
+//     }
+
+//     req.flash("error", "You do not have permission to do that");
+//     res.redirect(`/listings/${id}`);
+// };
+
 module.exports.isReviewAuthor = async (req, res, next) => {
     const {id ,reviewId} = req.params;
     const review = await Review.findById(reviewId);
@@ -43,6 +83,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     next();
 };
 
+/* ---------------- VALIDATION ---------------- */
 module.exports.validateListing = (req, res, next) => {
   const result = listingSchema.validate(req.body, { abortEarly: false });
   if (result.error) {
@@ -53,6 +94,7 @@ module.exports.validateListing = (req, res, next) => {
   }
   next();
 };
+
 module.exports.validateReview = (req, res, next) => {
   const result = reviewSchema.validate(req.body, { abortEarly: false });
   if (result.error) {
@@ -63,3 +105,23 @@ module.exports.validateReview = (req, res, next) => {
   }
   next();
 };
+
+
+
+// Utislity to normalize checkbox inputs
+const normalizeCheckboxes = (req, res, next) => {
+    // If body does not exist, skip
+    if (!req.body || !req.body.listing) {
+        return next();
+    }
+
+    req.body.listing.workspaceAvailable =
+        req.body.listing.workspaceAvailable === "on";
+
+    req.body.listing.longStayAllowed =
+        req.body.listing.longStayAllowed === "on";
+
+    next();
+};
+
+module.exports.normalizeCheckboxes = normalizeCheckboxes;

@@ -35,7 +35,7 @@
             height: 2.5rem;
             display: flex;
             align-items: center;
-            padding: 1rem ;
+            padding: 1rem;
             margin-left: auto;
         }
     </style>
@@ -83,6 +83,34 @@
             </div>
         </div>
     </div>
+
+    <form method="GET" action="/listings" class="row g-3 mt-3 mb-4">
+       <div class="col-md-3">
+            <input type="text" name="location" class="form-control" placeholder="Location">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="minPrice" class="form-control" placeholder="Min Price">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="maxPrice" class="form-control" placeholder="Max Price">
+        </div>
+        <div class="col-md-2">
+            <select name="category" class="form-select">
+                <option value="">Category</option>
+                <option value="rooms">Rooms</option>
+                <option value="mountains">Mountains</option>
+                <option value="camping">Camping</option>
+                <option value="pools">Amazing Pools</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="guests" class="form-control" placeholder="Guests">
+        </div>
+        <div class="col-md-1 d-grid">
+            <button class="btn btn-dark">Filter</button>
+        </div>
+    </form>
+
 
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mt-1.5">
         <% for (let listing of allListings){ %>

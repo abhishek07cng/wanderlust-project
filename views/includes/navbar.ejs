@@ -1,16 +1,19 @@
 <style>
   .search-btn {
     background-color: #fe424f;
-    color: white;;
-    border-radius: 2rem; 
+    color: white;
+    ;
+    border-radius: 2rem;
   }
+
   .search-btn:hover {
     background-color: #fe242f;
     color: white;
   }
+
   .search-input {
-    border-radius: 2rem; 
-    padding: 0.5rem 3rem 0.5rem 3rem ;
+    border-radius: 2rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
   }
 </style>
 
@@ -30,7 +33,21 @@
           <button class="btn search-btn" type="submit">Search</button>
         </form>
       </div>
+      
       <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">Add new Listing</a>
+
+        <% if(!currUser){ %>
+          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+          <a class="nav-link" href="/login"><b>Log In</b></a>
+          <% } %>
+
+            <% if(currUser){ %>
+              <a class="nav-link" href="/logout"><b>Log Out</b></a>
+              <% } %>
+      </div>
+
+      <!-- <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Add new Listing</a>
         <% if(!currUser){ %>
           <a class="nav-link" href="/signup"><b>Sign Up</b></a>
@@ -39,7 +56,7 @@
             <% if(currUser){ %>
               <a class="nav-link" href="/logout"><b>Log Out</b></a>
               <% } %>
-      </div>
+      </div> -->
     </div>
   </div>
 </nav>

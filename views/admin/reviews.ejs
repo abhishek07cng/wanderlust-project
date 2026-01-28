@@ -1,0 +1,22 @@
+<% layout("/layouts/boilerplate") %>
+
+<h1>Manage Reviews</h1>
+
+<table class="table mt-4">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Rating</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (let review of reviews) { %>
+      <tr>
+        <td><%= review.author?.username %></td>
+        <td><%= review.rating %></td>
+        <td><%= review.comment %></td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

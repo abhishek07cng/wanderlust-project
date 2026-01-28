@@ -31,6 +31,10 @@ module.exports.createNewListing = async (req, res) => {
         query: req.body.listing.location,
         limit: 2
     }).send()
+    //  ✅ FIX: normalize checkbox values
+    req.body.listing.workspaceAvailable = Boolean(req.body.listing.workspaceAvailable);
+    req.body.listing.longStayAllowed = Boolean(req.body.listing.longStayAllowed);
+
 
     let url = req.file.path;
     let filename = req.file.filename;
@@ -42,7 +46,7 @@ module.exports.createNewListing = async (req, res) => {
     newListing.geometry = response.body.features[0].geometry;
     let savedListing = await newListing.save();
     console.log(savedListing);
-    
+
     req.flash("success", "Successfully Created a New Listing !");
     res.redirect("/listings");
 }
@@ -93,6 +97,11 @@ module.exports.updateListing = async (req, res) => {
     listing.location = req.body.listing.location;
     listing.country = req.body.listing.country;
 
+    listing.workspaceAvailable = Boolean(req.body.listing.workspaceAvailable);
+    listing.longStayAllowed = Boolean(req.body.listing.longStayAllowed);
+    listing.minStayDays = req.body.listing.minStayDays;
+    listing.wifiSpeed = req.body.listing.wifiSpeed;
+
     // 3️⃣ Update image ONLY if new file uploaded
     if (req.file) {
         let curl = req.file.path;
@@ -117,3 +126,50 @@ module.exports.deleteListing = async (req, res) => {
     req.flash("success", "Successfully Deleted the Listing !");
     res.redirect("/listings");
 }
+module.exports.index = async (req, res) => {
+    let {
+        location,
+        minPrice,
+        maxPrice,
+        category,
+        amenities,
+        guests
+    } = req.query;
+
+    let filter = {};
+
+    // 📍 Location filter
+    if (location) {
+        filter.location = { $regex: location, $options: "i" };
+    }
+
+    // 💰 Price filter
+    if (minPrice || maxPrice) {
+        filter.price = {};
+        if (minPrice) filter.price.$gte = minPrice;
+        if (maxPrice) filter.price.$lte = maxPrice;
+    }
+
+    // 🏠 Category
+    if (category) {
+        filter.category = category;
+    }
+
+    // ⭐ Amenities (array match)
+    //   if (amenities) {
+    //     filter.amenities = { $all: amenities.split(",") };
+    //   }
+    if (amenities) {
+        filter.amenities = {
+            $all: Array.isArray(amenities) ? amenities : [amenities]
+        };
+    }
+
+
+    // 👥 Guests
+    if (guests) {
+        filter.maxGuests = { $gte: guests };
+    }
+    const allListings = await Listing.find(filter);
+    res.render("listings/index.ejs", { allListings });
+};

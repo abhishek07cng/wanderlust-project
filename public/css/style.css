@@ -58,6 +58,7 @@ body {
 }
 
 .f-info {
+    margin-top: 50px;
     height: 8rem;
     display: flex;
     flex-wrap: wrap;

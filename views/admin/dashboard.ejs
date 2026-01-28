@@ -1,0 +1,91 @@
+<% layout("/layouts/boilerplate") %>
+
+<h1 class="mb-4">Admin Dashboard</h1>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h4>Total Listings</h4>
+      <p><%= listingsCount %></p>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h4>Total Users</h4>
+      <p><%= usersCount %></p>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h4>Total Reviews</h4>
+      <p><%= reviewsCount %></p>
+    </div>
+  </div>
+</div>
+<hr class="my-5">
+
+<h3 class="mb-4">Platform Analytics 📊</h3>
+
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <canvas id="categoryChart"></canvas>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <canvas id="locationChart"></canvas>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <canvas id="roleChart"></canvas>
+  </div>
+</div>
+
+
+<a href="/admin/listings" class="btn btn-dark mt-4">Manage Listings</a>
+<a href="/admin/users" class="btn btn-dark mt-4">Manage Users</a>
+<a href="/admin/reviews" class="btn btn-dark mt-4">Manage Reviews</a>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const listingsByCategory = <%- JSON.stringify(listingsByCategory) %>;
+  const listingsByLocation = <%- JSON.stringify(listingsByLocation) %>;
+  const usersByRole = <%- JSON.stringify(usersByRole) %>;
+
+  // CATEGORY BAR CHART
+  new Chart(document.getElementById("categoryChart"), {
+    type: "bar",
+    data: {
+      labels: listingsByCategory.map(item => item._id),
+      datasets: [{
+        label: "Listings",
+        data: listingsByCategory.map(item => item.count)
+      }]
+    }
+  });
+
+  // LOCATION PIE CHART
+  new Chart(document.getElementById("locationChart"), {
+    type: "pie",
+    data: {
+      labels: listingsByLocation.map(item => item._id),
+      datasets: [{
+        data: listingsByLocation.map(item => item.count)
+      }]
+    }
+  });
+
+  // USER ROLE DOUGHNUT
+  new Chart(document.getElementById("roleChart"), {
+    type: "doughnut",
+    data: {
+      labels: usersByRole.map(item => item._id),
+      datasets: [{
+        data: usersByRole.map(item => item.count)
+      }]
+    }
+  });
+</script>
+
+

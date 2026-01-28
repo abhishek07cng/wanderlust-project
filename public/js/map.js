@@ -1,4 +1,7 @@
 
+if (!listing.geometry) {
+    console.error("Listing has no geometry");
+}
 // let mapToken = "<%= process.env.MAP_TOKEN %>";
 // console.log(mapToken);
 mapboxgl.accessToken = mapToken;
