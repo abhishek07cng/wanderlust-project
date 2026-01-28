@@ -28,12 +28,30 @@
         <a class="nav-link" href="/listings">Explore</a>
       </div>
       <div class="navbar-nav ms-auto">
-        <form class="d-flex " role="search">
-          <input class="form-control me-2 search-input" type="search" placeholder="Search Destinations" />
+        <form class="d-flex " role="search" action="/listings" method="GET">
+          <input class="form-control me-2 search-input" type="search" name="location"
+            placeholder="Search Destinations" />
           <button class="btn search-btn" type="submit">Search</button>
         </form>
       </div>
-      
+      <div class="navbar-nav ms-3">
+        <% if (currUser) { %>
+
+          <li class="nav-item">
+            <span class="nav-link text-light bg-secondary text-info rounded-pill">
+              👋 <%= currUser.username %>
+            </span>
+          </li>
+          <% if (currUser.role==="admin" ) { %>
+            <li class="nav-item">
+              <a class="btn btn-warning ms-3" href="/admin">
+                Admin Dashboard
+              </a>
+            </li>
+            <% } %>
+                <% } %>
+      </div>
+
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Add new Listing</a>
 

@@ -44,7 +44,23 @@
                         <div class="invalid-feedback">Please enter a location.</div>
                     </div>
                     <br>
-                
+
+                    <h3>Category</h3>
+                    <div class="mb-3">
+                        <label>Category</label>
+                        <select name="listing[category]" required>
+                            <option value="">Select category</option>
+                            <option value="ROOMS">Rooms</option>
+                            <option value="ICONIC_CITIES">Iconic Cities</option>
+                            <option value="MOUNTAINS">Mountains</option>
+                            <option value="CAMPING">Camping</option>
+                            <option value="ARCTIC">Arctic</option>
+                            <option value="CASTLES">Castles</option>
+                            <option value="AMAZING_POOLS">Amazing Pools</option>
+                        </select>
+
+                    </div>
+
                     <h3>Additional Amenities</h3>
                     <div>
                         <label class="form-label">WiFi Speed (Mbps)</label>
@@ -52,21 +68,21 @@
                     </div>
                     <div>
                         <label class="form-label">
-                        <input type="checkbox" name="listing[workspaceAvailable]" >
-                        Workspace Available
-                    </label>
+                            <input type="checkbox" name="listing[workspaceAvailable]">
+                            Workspace Available
+                        </label>
                     </div>
                     <div>
-                       <label class="form-label form-check-label">
-                        <input type="checkbox" name="listing[longStayAllowed]">
-                        Long Stay Allowed
-                    </label> 
+                        <label class="form-label form-check-label">
+                            <input type="checkbox" name="listing[longStayAllowed]">
+                            Long Stay Allowed
+                        </label>
                     </div>
                     <div>
                         <label class="form-label">Minimum Stay (Days)</label>
-                         <input type="number" name="listing[minStayDays]" value="1" class="form-control">
+                        <input type="number" name="listing[minStayDays]" value="1" class="form-control">
                     </div>
-                    
+
                     <br>
                     <button class="btn btn-dark add-btn" type="submit">Add Listing</button>
                     <br><br><br>

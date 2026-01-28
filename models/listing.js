@@ -50,7 +50,7 @@ const listingSchema = new Schema({
         }
     },
     wifiSpeed: {
-        type: Number, 
+        type: Number,
         required: true
     },
 
@@ -68,6 +68,12 @@ const listingSchema = new Schema({
         type: Number,
         default: 1
     },
+    category: {
+        type: String,
+        required: true,
+        enum: ["ROOMS", "ICONIC_CITIES", "MOUNTAINS", "CAMPING", "ARCTIC", "CASTLES", "AMAZING_POOLS"]
+    }
+
 
 });
 

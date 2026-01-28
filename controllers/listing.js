@@ -42,6 +42,9 @@ module.exports.createNewListing = async (req, res) => {
     newListing.owner = req.user._id;
     newListing.image.url = url;
     newListing.image.filename = filename;
+    newListing.category = req.body.listing.category;
+
+
 
     newListing.geometry = response.body.features[0].geometry;
     let savedListing = await newListing.save();
@@ -96,6 +99,9 @@ module.exports.updateListing = async (req, res) => {
     listing.price = req.body.listing.price;
     listing.location = req.body.listing.location;
     listing.country = req.body.listing.country;
+    listing.category = req.body.listing.category;
+    // listing.maxGuests = req.body.listing.maxGuests;
+    // listing.amenities = req.body.listing.amenities;
 
     listing.workspaceAvailable = Boolean(req.body.listing.workspaceAvailable);
     listing.longStayAllowed = Boolean(req.body.listing.longStayAllowed);
@@ -126,6 +132,7 @@ module.exports.deleteListing = async (req, res) => {
     req.flash("success", "Successfully Deleted the Listing !");
     res.redirect("/listings");
 }
+//Index Route - List all listings with filters
 module.exports.index = async (req, res) => {
     let {
         location,

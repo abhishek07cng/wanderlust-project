@@ -8,7 +8,11 @@ module.exports.listingSchema = Joi.object({
     location: Joi.string().required(),
     country: Joi.string().required(),
     image: Joi.any().optional(),
-
+    category: Joi.string()
+      .valid(
+        "ROOMS", "ICONIC_CITIES", "MOUNTAINS", "CAMPING", "ARCTIC", "CASTLES", "AMAZING_POOLS"
+      )
+      .required(),
 
     wifiSpeed: Joi.number().required().min(1),
     workspaceAvailable: Joi.boolean()
@@ -27,6 +31,7 @@ module.exports.listingSchema = Joi.object({
     //   filename: Joi.string().allow("", null),
     // }).required(),
   }).required(),
+  
 });
 
 module.exports.reviewSchema = Joi.object({

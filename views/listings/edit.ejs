@@ -53,6 +53,18 @@
                         required>
                     <div class="invalid-feedback">Please enter a country.</div>
                 </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select name="listing[category]" class="form-select">
+                        <option value="Rooms" <%=listing.category==="Rooms" ? "selected" : "" %>>Rooms</option>
+                        <option value="Trending" <%=listing.category==="Trending" ? "selected" : "" %>>Trending</option>
+                        <option value="Iconic Cities" <%=listing.category==="Iconic Cities" ? "selected" : "" %>>Iconic
+                            Cities</option>
+                    </select>
+
+                </div>
+
                 <h3>Additional Amenities</h3>
                 <div>
                     <label class="form-label">WiFi Speed (Mbps)</label>
