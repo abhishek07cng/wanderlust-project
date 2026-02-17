@@ -26,6 +26,7 @@ body {
 
 .nav-link {
     color: #222222 !important;
+    width : auto !important;
 }
 
 .f-info-links a {

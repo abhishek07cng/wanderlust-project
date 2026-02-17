@@ -2,7 +2,6 @@
   .search-btn {
     background-color: #fe424f;
     color: white;
-    ;
     border-radius: 2rem;
   }
 
@@ -15,42 +14,104 @@
     border-radius: 2rem;
     padding: 0.5rem 3rem 0.5rem 3rem;
   }
+
+  /* ===== Mobile Backdrop ===== */
+  /* ===== Mobile Backdrop (ONLY remaining area) ===== */
+  #mobileBackdrop {
+    position: fixed;
+    top: 56px;
+    /* navbar height */
+    left: 0;
+    width: 25%;
+    /* ONLY remaining area */
+    height: calc(100vh - 56px);
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    z-index: 1040;
+  }
+
+  /* ===== Mobile Drawer ===== */
+  @media (max-width: 767px) {
+    .navbar-collapse {
+      position: fixed;
+      top: 56px;
+      right: 0;
+      width: 75%;
+      height: calc(100vh - 56px);
+      background: white;
+      padding: 1.5rem;
+      z-index: 1050;
+      overflow-y: auto;
+      box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+    }
+  }
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+    </a>
+
+    <!-- Hamburger -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
       <div class="navbar-nav">
         <a class="nav-link" href="/listings">Explore</a>
       </div>
+
       <div class="navbar-nav ms-auto">
-        <form class="d-flex " role="search" action="/listings" method="GET">
+        <form class="d-flex" role="search" action="/listings" method="GET">
           <input class="form-control me-2 search-input" type="search" name="location"
             placeholder="Search Destinations" />
           <button class="btn search-btn" type="submit">Search</button>
         </form>
       </div>
-      <div class="navbar-nav ms-3">
-        <% if (currUser) { %>
 
-          <li class="nav-item">
-            <span class="nav-link text-light bg-secondary text-info rounded-pill">
+      <!-- ================= MOBILE VERSION ================= -->
+      <div class="navbar-nav flex-column align-items-start d-block d-md-none">
+
+        <% if (currUser) { %>
+          <div class="mt-2">
+            <span class="p-1 text-light bg-secondary rounded-pill px-3">
               👋 <%= currUser.username %>
             </span>
-          </li>
+          </div>
+
           <% if (currUser.role==="admin" ) { %>
-            <li class="nav-item">
-              <a class="btn btn-warning ms-3" href="/admin">
+            <div class="mt-2">
+              <a class="btn btn-warning" href="/admin">
                 Admin Dashboard
               </a>
-            </li>
+            </div>
             <% } %>
-                <% } %>
+              <% } %>
+
       </div>
+
+
+      <!-- ================= DESKTOP VERSION ================= -->
+      <div class="navbar-nav align-items-center d-none d-md-flex">
+
+        <% if (currUser) { %>
+          <span class="text-light bg-secondary rounded-pill  px-3 me-3" style="margin-left: 10px;">
+            👋 <%= currUser.username %>
+          </span>
+
+          <% if (currUser.role==="admin" ) { %>
+            <a class="btn btn-warning" href="/admin">
+              Admin Dashboard
+            </a>
+            <% } %>
+              <% } %>
+
+      </div>
+
 
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Add new Listing</a>
@@ -58,23 +119,14 @@
         <% if(!currUser){ %>
           <a class="nav-link" href="/signup"><b>Sign Up</b></a>
           <a class="nav-link" href="/login"><b>Log In</b></a>
-          <% } %>
-
-            <% if(currUser){ %>
-              <a class="nav-link" href="/logout"><b>Log Out</b></a>
-              <% } %>
+          <% } else { %>
+            <a class="nav-link" href="/logout"><b>Log Out</b></a>
+            <% } %>
       </div>
 
-      <!-- <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Add new Listing</a>
-        <% if(!currUser){ %>
-          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
-          <a class="nav-link" href="/login"><b>Log In</b></a>
-          <% } %>
-            <% if(currUser){ %>
-              <a class="nav-link" href="/logout"><b>Log Out</b></a>
-              <% } %>
-      </div> -->
     </div>
   </div>
 </nav>
+
+<!-- Mobile Backdrop -->
+<div id="mobileBackdrop" style="right: 75%;"></div>
