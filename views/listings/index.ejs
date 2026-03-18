@@ -40,8 +40,76 @@
             padding: 1rem;
             margin-left: auto;
         }
+
+        .img-container {
+            position: relative;
+        }
+
+        .price-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 1rem;
+            font-weight: 600;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #fe424f;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .listing-card {
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .listing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .listing-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .listing-card:hover .listing-img {
+            transform: scale(1.05);
+        }
+
+        .listing-title {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .listing-img {
+            height: 220px;
+        }
     </style>
-    <div id="filters">
+    <!-- Hero Section -->
+    <div class="hero-section text-center mb-4 mt-2">
+        <h1>Find your next stay</h1>
+        <p>Explore amazing places around the world</p>
+
+        <form class="d-flex justify-content-center mt-3" action="/listings" method="GET">
+            <input class="form-control w-50 search-input" type="search" name="location"
+                placeholder="Search destinations..." />
+            <button class="btn search-btn ms-2">Search</button>
+        </form>
+    </div>
+    <!-- Filter Section -->
+    <div id="filters" class="filter-container mb-4">
         <a href="/listings?category=Trending" class="filter">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>Trending</p>
@@ -74,10 +142,7 @@
             <div><i class="fa-solid fa-snowflake"></i></div>
             <p>Arctic</p>
         </a>
-        <a href="/listings?category=CAMPING" class="filter">
-            <div><i class="fa-solid fa-campground"></i></div>
-            <p>Camping</p>
-        </a>
+
         <div class="tax-toggle">
             <div class="form-check-reverse form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
@@ -116,40 +181,93 @@
         </div>
     </form>
 
+    <!--FEATURED LISTINGS -->
+    <h3 class="mb-3">🌟 Featured Listings</h3>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mt-1">
 
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mt-1.5">
-        <% for (let listing of allListings){ %>
-            <a href="/listings/<%= listing._id %>" class="listing-link">
-                <div class="card col">
-                    <!-- <img src="<%= listing.image %>" class="card-img-top" style="height:20rem;" alt="listing image"> -->
-                    <img src="<%= listing.image.url %>" class="card-img-top" style="height:20rem;" alt="listing image">
+        <% allListings.slice(0,2).forEach(listing=> { %>
 
-                    <div class="card-img-overlay"> </div>
-                    <div class="card-body">
-                        <p class="card-text"><b>
+            <div class="col">
+                <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+
+                    <div class="card listing-card featured-card">
+
+                        <div class="img-container">
+                            <img src="<%= listing.image.url %>" class="listing-img">
+
+                            <span class="price-badge">
+                                ₹<%= listing.price %>/night
+                            </span>
+
+                            <span class="category-badge">
+                                <%= listing.category %>
+                            </span>
+                        </div>
+
+                        <div class="card-body">
+                            <h6 class="listing-title">
                                 <%= listing.title %>
-                            </b><br>
-                            Price: &#8377; <%= listing.price.toLocaleString("en-IN") %> /night
-                                <i class="tax-info"> &nbsp; +18% GST</i> </p>
+                            </h6>
+                        </div>
+
+                    </div>
+
+                </a>
+            </div>
+
+            <% }) %>
+
+    </div>
+
+
+    <!-- ✅ 4️⃣ ALL LISTINGS TITLE (ADD HERE) -->
+    <h3 class="mb-3">All Listings</h3>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mt-1.5">
+        <% allListings.slice(2).forEach(listing=> { %>
+
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <div class="card listing-card ">
+                    <div class="img-container">
+                        <img src="<%= listing.image.url %>" class="listing-img">
+
+                        <!-- Price -->
+                        <span class="price-badge">
+                            ₹<%= listing.price %>/night
+                        </span>
+
+                        <!-- Category -->
+                        <span class="category-badge">
+                            <%= listing.category %>
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+                        <h6 class="listing-title">
+                            <%= listing.title %>
+                        </h6>
                     </div>
                 </div>
 
             </a>
-            <% } %>
+            <% }) %>
     </div>
 
-    <script>
-        let taxswitch = document.getElementById('switchCheckDefault');
-        taxswitch.addEventListener("click", function () {
+    <% if(allListings.length===0) { %>
+        <h4 class="text-center mt-4">No listings found 😕</h4>
+        <% } %>
 
-            let taxinfo = document.getElementsByClassName("tax-info");
-            for (info of taxinfo) {
-                if (info.style.display != "inline") {
-                    info.style.display = "inline";
-                } else {
-                    info.style.display = "none";
-                }
-            }
+            <script>
+                let taxswitch = document.getElementById('switchCheckDefault');
+                taxswitch.addEventListener("click", function () {
 
-        });
-    </script>
+                    let taxinfo = document.getElementsByClassName("tax-info");
+                    for (let info of taxinfo) {
+                        if (info.style.display != "inline") {
+                            info.style.display = "inline";
+                        } else {
+                            info.style.display = "none";
+                        }
+                    }
+
+                });
+            </script>
