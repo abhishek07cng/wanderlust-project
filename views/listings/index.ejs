@@ -9,8 +9,8 @@
     <style>
         #filters {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
+            overflow-x: auto;
         }
 
         .filter {
@@ -109,44 +109,47 @@
         </form>
     </div>
     <!-- Filter Section -->
-    <div id="filters" class="filter-container mb-4">
-        <a href="/listings?category=Trending" class="filter">
-            <div><i class="fa-solid fa-fire"></i></div>
-            <p>Trending</p>
-        </a>
-        <a href="/listings?category=ROOMS" class="filter">
-            <div><i class="fa-solid fa-bed"></i></div>
-            <p>Rooms</p>
-        </a>
-        <a href="/listings?category=ICONIC_CITIES" class="filter">
-            <div><i class="fa-solid fa-location-dot"></i></div>
-            <p>Iconic Cities</p>
-        </a>
-        <a href="/listings?category=MOUNTAINS" class="filter">
-            <div><i class="fa-solid fa-mountain-city"></i></div>
-            <p>Mountains</p>
-        </a>
-        <a href="/listings?category=CASTLES" class="filter">
-            <div><i class="fa-brands fa-fort-awesome"></i></div>
-            <p>Castles</p>
-        </a>
-        <a href="/listings?category=AMAZING_POOLS" class="filter">
-            <div><i class="fa-solid fa-water"></i></div>
-            <p>Amazing Pools</p>
-        </a>
-        <a href="/listings?category=CAMPING " class="filter">
-            <div><i class="fa-solid fa-campground"></i></div>
-            <p>Camping</p>
-        </a>
-        <a href="/listings?category=ARCTIC" class="filter">
-            <div><i class="fa-solid fa-snowflake"></i></div>
-            <p>Arctic</p>
-        </a>
-
-        <div class="tax-toggle">
-            <div class="form-check-reverse form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-                <label class="form-check-label" for="switchCheckDefault">Default switch checkbox input</label>
+    <div  class="filter-container mb-4">
+        <div id="filters">
+            <a href="/listings?category=Trending" class="filter">
+                <div><i class="fa-solid fa-fire"></i></div>
+                <p>Trending</p>
+            </a>
+            <a href="/listings?category=ROOMS" class="filter">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+            </a>
+            <a href="/listings?category=ICONIC_CITIES" class="filter">
+                <div><i class="fa-solid fa-location-dot"></i></div>
+                <p>Iconic Cities</p>
+            </a>
+            <a href="/listings?category=MOUNTAINS" class="filter">
+                <div><i class="fa-solid fa-mountain-city"></i></div>
+                <p>Mountains</p>
+            </a>
+            <a href="/listings?category=CASTLES" class="filter">
+                <div><i class="fa-brands fa-fort-awesome"></i></div>
+                <p>Castles</p>
+            </a>
+            <a href="/listings?category=AMAZING_POOLS" class="filter">
+                <div><i class="fa-solid fa-water"></i></div>
+                <p>Amazing Pools</p>
+            </a>
+            <a href="/listings?category=CAMPING " class="filter">
+                <div><i class="fa-solid fa-campground"></i></div>
+                <p>Camping</p>
+            </a>
+            <a href="/listings?category=ARCTIC" class="filter">
+                <div><i class="fa-solid fa-snowflake"></i></div>
+                <p>Arctic</p>
+            </a>
+        </div>
+        <div>
+            <div class="tax-toggle">
+                <div class="form-check-reverse form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                    <label class="form-check-label" for="switchCheckDefault">Default switch checkbox input</label>
+                </div>
             </div>
         </div>
     </div>
@@ -183,11 +186,11 @@
 
     <!--FEATURED LISTINGS -->
     <h3 class="mb-3">🌟 Featured Listings</h3>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mt-1">
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mt-1.5 mb-3">
 
-        <% allListings.slice(0,2).forEach(listing=> { %>
+        <% allListings.slice(0,3).forEach(listing=> { %>
 
-            <div class="col">
+            <div class="">
                 <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
 
                     <div class="card listing-card featured-card">
@@ -223,7 +226,7 @@
     <!-- ✅ 4️⃣ ALL LISTINGS TITLE (ADD HERE) -->
     <h3 class="mb-3">All Listings</h3>
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 mt-1.5">
-        <% allListings.slice(2).forEach(listing=> { %>
+        <% allListings.slice(3).forEach(listing=> { %>
 
             <a href="/listings/<%= listing._id %>" class="listing-link">
                 <div class="card listing-card ">

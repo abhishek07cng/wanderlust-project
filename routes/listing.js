@@ -17,7 +17,20 @@ const {
 const multer  = require('multer')
 const { storage } = require("../cloudConfig.js");
 
-const upload = multer({ storage})
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp","image/avif"];
+
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new ExpressError(400, "Only JPG, PNG, WEBP, AVIF images are allowed"), false);
+  }
+};
+
+const upload = multer({ 
+  storage,
+  fileFilter
+});
 
 const listingController = require("../controllers/listing.js");
 

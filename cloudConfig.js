@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary').v2;
 const { allow } = require('joi');
+const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
@@ -12,7 +13,11 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'wanderLust_Dev',
-    allowed_formats: ['jpeg', 'png', 'jpg'],
+    // ✅ Only allow these formats
+    allowed_formats: ["jpeg", "png", "jpg", "webp", "avif"],
+
+    // ✅ Auto optimize images
+    transformation: [{ quality: "auto", fetch_format: "auto" }],    
   },
 });
 
