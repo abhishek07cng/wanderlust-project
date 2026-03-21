@@ -1,6 +1,6 @@
-# 🏡 WanderStay – Airbnb Style Listing Web App
+# 🏡 WanderLust – Airbnb Style Listing Web App
 
-WanderStay is a **full-stack Airbnb-inspired web application** where users can explore, create, edit, and manage property listings with a smooth and responsive experience.
+WanderLust is a **full-stack Airbnb-inspired web application** where users can explore, create, edit, and manage property listings with a smooth and responsive experience.
 
 It includes **secure authentication, role-based access control, admin dashboard, cloud image uploads, and interactive maps using Mapbox**, making it a production-ready project.
 
