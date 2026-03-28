@@ -21,6 +21,8 @@ const listings = require('./routes/listing.js');
 const reviews = require('./routes/review.js');
 const user = require('./routes/user.js');
 const adminRoutes = require("./routes/admin");
+const bookingRoutes = require("./routes/booking");
+
 
 
 
@@ -137,6 +139,8 @@ app.use("/listings",listings);
 app.use("/listings/:id/reviews", reviews);
 app.use("/", user);
 app.use("/admin", adminRoutes);
+
+app.use("/bookings", bookingRoutes);
 
 // //Index Route - List all listings
 // app.get("/listings", wrapAsync(async (req, res) => {
